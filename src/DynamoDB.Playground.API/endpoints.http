@@ -1,0 +1,43 @@
+###
+# @name=Normal Server Health Check
+
+POST {{host}}/health HTTP/1.1
+Content-Type: application/json
+
+###
+# @name=Get Brewery By Id
+
+GET {{host}}/breweries/{{breweryId}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name=Update Brewery
+
+PUT {{host}}/breweries/{{breweryId}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Example Brewery",
+  "city": "Sample City",
+  "state": "Sample State",
+  "websiteUrl": "http://example.com"
+}
+
+###
+# @name=Delete Brewery
+
+DELETE {{host}}/breweries/{{breweryId}} HTTP/1.1
+Content-Type: application/json
+
+###
+# @name=Create Brewery
+
+POST {{host}}/breweries HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "New Brewery",
+  "city": "New City",
+  "state": "New State",
+  "websiteUrl": "http://newbrewery.com"
+}
