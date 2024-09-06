@@ -1,0 +1,19 @@
+{
+  "TableName": "Breweries",
+  "KeySchema": [
+    {
+      "AttributeName": "breweryId",
+      "KeyType": "HASH"
+    }
+  ],
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "breweryId",
+      "AttributeType": "S"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 5,
+    "WriteCapacityUnits": 5
+  }
+}
