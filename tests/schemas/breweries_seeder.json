@@ -1,0 +1,88 @@
+{
+  "Breweries": [
+    {
+      "PutRequest": {
+        "Item": {
+          "breweryId": {
+            "S": "5128df48-79fc-4f0f-8b52-d06be54d0cec"
+          },
+          "name": {
+            "S": "(405) Brewing Co"
+          },
+          "city": {
+            "S": "Norman"
+          },
+          "state": {
+            "S": "Oklahoma"
+          },
+          "websiteUrl": {
+            "S": "http://www.405brewing.com"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "breweryId": {
+            "S": "9c5a66c8-cc13-416f-a5d9-0a769c87d318"
+          },
+          "name": {
+            "S": "(512) Brewing Co"
+          },
+          "city": {
+            "S": "Austin"
+          },
+          "state": {
+            "S": "Texas"
+          },
+          "websiteUrl": {
+            "S": "http://www.512brewing.com"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "breweryId": {
+            "S": "34e8c68b-6146-453f-a4b9-1f6cd99a5ada"
+          },
+          "name": {
+            "S": "1 of Us Brewing Company"
+          },
+          "city": {
+            "S": "Mount Pleasant"
+          },
+          "state": {
+            "S": "Wisconsin"
+          },
+          "websiteUrl": {
+            "S": "https://www.1ofusbrewing.com"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "breweryId": {
+            "S": "ef970757-fe42-416f-931d-722451f1f59c"
+          },
+          "name": {
+            "S": "10 Barrel Brewing Co"
+          },
+          "city": {
+            "S": "Bend"
+          },
+          "state": {
+            "S": "Oregon"
+          },
+          "websiteUrl": {
+            "S": "http://www.10barrel.com"
+          }
+        }
+      }
+    }
+  ]
+}

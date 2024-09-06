@@ -1,0 +1,62 @@
+services:
+  brewery-api:
+    container_name: brewery-api
+    build:
+      context: .
+      dockerfile: ./src/DynamoDB.Playground.API/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+  
+  dynamodb-local:
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    user: root
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+    healthcheck:
+      test: [ "CMD-SHELL", '[ "$(curl -s -o /dev/null -I -w ''%{http_code}'' http://localhost:8000)" == "400" ]' ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  dynamodb-local-setup:
+    container_name: dynamodb-local-setup
+    depends_on:
+      dynamodb-local:
+        condition: service_healthy
+    image: amazon/aws-cli
+    volumes:
+      - "./tests/schemas:/tmp/dynamo"
+    environment:
+      AWS_ACCESS_KEY_ID: 'FAKEID'
+      AWS_SECRET_ACCESS_KEY: 'FAKEKEY'
+      AWS_REGION: 'eu-west-1'
+    entrypoint:
+      - bash
+    command:
+      - '-c'
+      - |
+        aws dynamodb list-tables --endpoint-url http://dynamodb-local:8000 --query "TableNames" --output text | grep -w Breweries \
+        || aws dynamodb create-table --endpoint-url http://dynamodb-local:8000 --cli-input-json file:///tmp/dynamo/breweries.json
+
+  dynamodb-seeder:
+    container_name: dynamodb-seeder
+    depends_on:
+      dynamodb-local-setup:
+        condition: service_completed_successfully
+    image: amazon/aws-cli
+    volumes:
+      - "./tests/schemas:/tmp/dynamo"
+    environment:
+      AWS_ACCESS_KEY_ID: 'FAKEID'
+      AWS_SECRET_ACCESS_KEY: 'FAKEKEY'
+      AWS_REGION: 'eu-west-1'
+    entrypoint:
+      - bash
+    command: ["-c", "aws dynamodb batch-write-item --endpoint-url http://dynamodb-local:8000 --request-items file:///tmp/dynamo/breweries_seeder.json"]
